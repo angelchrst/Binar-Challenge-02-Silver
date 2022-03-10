@@ -48,13 +48,24 @@ function getInfoPenjualan(dataPenjualan) {
   // hitung persen keuntungan dan formatnya
   let persenUntung = untung / modal * 100;
   let persentaseKeuntungan = persenUntung.toFixed(2) + '%';
-  // mencari produk buku terlaris dan penulis buku terlaris
+  // mencari produk buku terlaris
   let novelTerjual = dataPenjualan.map(data => data.totalTerjual);
   let penjualanTerbanyak = Math.max(...novelTerjual);
-  let produkBukuTerlaris = dataPenjualan.filter((data) => data.totalTerjual == penjualanTerbanyak).map(data => data.namaProduk).toString();
-  let penulisTerlaris = dataPenjualan.filter((data) => data.totalTerjual == penjualanTerbanyak).map(data => data.penulis).toString();
+  let produkBukuTerlaris = dataPenjualan.filter((data) => data.totalTerjual === penjualanTerbanyak).map(data => data.namaProduk).toString();
+  // mencari penulis terlaris
+  hasil = [];
+  dataPenjualan.forEach(function(data) {
+    if(!this[data.penulis]) {
+      this[data.penulis] = { penulis: data.penulis, totalTerjual: 0};
+      hasil.push(this[data.penulis]);
+    }
+    this[data.penulis].totalTerjual += data.totalTerjual;
+  }, Object.create(null));
+  let jumlahBuku = hasil.map(data => data.totalTerjual);
+  let terlaris = Math.max(...jumlahBuku);
+  let penulisTerlaris = hasil.filter((data) => data.totalTerjual === terlaris).map(data => data.penulis).toString();
   // memindahkan semua hasil perhitungan ke dalam object baru
-  let penjualanNovel = { totalKeuntungan, totalModal, persentaseKeuntungan, produkBukuTerlaris, penulisTerlaris }
+  let penjualanNovel = { totalKeuntungan, totalModal, persentaseKeuntungan, produkBukuTerlaris, penulisTerlaris}
   return penjualanNovel;
 }
 
