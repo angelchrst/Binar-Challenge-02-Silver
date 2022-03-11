@@ -1,5 +1,5 @@
 function checkEmail(email) {
-    let validateEmail_1 = /^([A-Za-z][A-Za-z0-9\-\.\_]*)\@([A-Za-z][A-Za-z0-9\-\_]*)(\.[A-Za-z][A-Za-z0-9\-\_]*)+$/;
+    let validateEmail_1 = /^([A-Za-z][A-Za-z0-9\-\.\_]*)\@([A-Za-z][A-Za-z0-9\-\_]*)(\.[A-Za-z][A-Za-z0-9\-\_]*)+$/
     let validateEmail_2 = /^([A-Za-z][A-Za-z0-9\-\.\_]*)+$/
     if(email != null) {
         if(typeof(email) == 'string') {
